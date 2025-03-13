@@ -1,4 +1,4 @@
-FROM node:22
+FROM node:lts-slim
 
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive apt install -y \
@@ -16,10 +16,9 @@ RUN apt update \
 ENV TZ=Asia/Tokyo
 ENV LANG=ja_JP
 
-RUN curl -q https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' \
-    && apt update \
-    && DEBIAN_FRONTEND=noninteractive apt install -y google-chrome-stable
+RUN curl -o /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+    && DEBIAN_FRONTEND=noninteractive apt install -y /tmp/google-chrome-stable_current_amd64.deb \
+    && rm /tmp/google-chrome-stable_current_amd64.deb
 
 RUN apt autoremove -y \
     && apt clean \
