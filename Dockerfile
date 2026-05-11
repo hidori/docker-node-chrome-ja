@@ -1,4 +1,4 @@
-FROM node:25-slim
+FROM node:26-slim
 
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive apt install -y \
